@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>CKD Prediction</title>
+	<script src="https://code.jquery.com/jquery-3.6.2.min.js"
+		integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+	<!-- <script src="../app.js"></script>
+	<link rel="stylesheet" href="./app.css"> -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<div class="img"></div>
+	<div class="login">
+		<!--  -->
+		<form class="form" action="{{ url_for('predict')}}" method="post" >
+
+			<h2>Age in years</h2>
+			<input class="area" type="text" id="age" class="floatLabel" name="age" value="">
+
+			<h2>Blood Pressure (bp in mm/Hg)</h2>
+			<input class="area" type="text" id="bp" class="floatLabel" name="bp" value="">
+
+			<h2>Specific Gravity (sg)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-sg-1" name="sg" value="1" />
+				<label for="radio-sg-1">1.005</label>
+				<input type="radio" id="radio-sg-2" name="sg" value="2" checked />
+				<label for="radio-sg-2">1.010</label>
+				<input type="radio" id="radio-sg-3" name="sg" value="3" />
+				<label for="radio-sg-3">1.015</label>
+				<input type="radio" id="radio-sg-4" name="sg" value="4" />
+				<label for="radio-sg-4">1.020</label>
+				<input type="radio" id="radio-sg-5" name="sg" value="5" />
+				<label for="radio-sg-5">1.025</label>
+			</div>
+
+			<h2>Albumin (al)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-al-0" name="al" value="0" />
+				<label for="radio-al-0">0</label>
+				<input type="radio" id="radio-al-1" name="al" value="1" />
+				<label for="radio-al-1">1</label>
+				<input type="radio" id="radio-al-2" name="al" value="2" checked />
+				<label for="radio-al-2">2</label>
+				<input type="radio" id="radio-al-3" name="al" value="3" />
+				<label for="radio-al-3">3</label>
+				<input type="radio" id="radio-al-4" name="al" value="4" />
+				<label for="radio-al-4">4</label>
+				<input type="radio" id="radio-al-5" name="al" value="5" />
+				<label for="radio-al-5">5</label>
+			</div>
+
+			<h2>ASugar(su)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-su-0" name="su" value="0" />
+				<label for="radio-su-0">0</label>
+				<input type="radio" id="radio-su-1" name="su" value="1" />
+				<label for="radio-su-1">1</label>
+				<input type="radio" id="radio-su-2" name="su" value="2" checked />
+				<label for="radio-su-2">2</label>
+				<input type="radio" id="radio-su-3" name="su" value="3" />
+				<label for="radio-su-3">3</label>
+				<input type="radio" id="radio-su-4" name="su" value="4" />
+				<label for="radio-su-4">4</label>
+				<input type="radio" id="radio-su-5" name="su" value="5" />
+				<label for="radio-su-5">5</label>
+			</div>
+
+			<h2>Blood Glucose Random (bgr in mgs/dl)</h2>
+			<input class="area" type="text" id="bgr" class="floatLabel" name="bgr" value="">
+
+			<h2>Blood Urea(bu in mgs/dl)</h2>
+			<input class="area" type="text" id="bu" class="floatLabel" name="bu" value="">
+
+			<h2>Serum Creatinine (sc in mgs/dl)</h2>
+			<input class="area" type="text" id="sc" class="floatLabel" name="sc" value="">
+
+			<h2>Sodium (sod in mEq/L)</h2>
+			<input class="area" type="text" id="sod" class="floatLabel" name="sod" value="">
+
+			<h2>Potassium (pot in mEq/L)</h2>
+			<input class="area" type="text" id="pot" class="floatLabel" name="pot" value="">
+
+			<h2>Hemoglobin (hemo in gms)</h2>
+			<input class="area" type="text" id="hemo" class="floatLabel" name="hemo" value="">
+
+			<h2>Packed Cell Volume (pcv)</h2>
+			<input class="area" type="text" id="pcv" class="floatLabel" name="pcv" value="">
+
+			<h2>White Blood Cell Count (wc in cells/cumm)</h2>
+			<input class="area" type="text" id="wc" class="floatLabel" name="wc" value="">
+
+			<h2>Red Blood Cell Count (rc in millions/cmm)</h2>
+			<input class="area" type="texttext" id="rc" class="floatLabel" name="rc" value="">
+
+			<h2>Red Blood Cells (rbc)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-rbc-1" name="rbc" value="1" />
+				<label for="radio-rbc-1">Normal</label>
+				<input type="radio" id="radio-rbc-2" name="rbc" value="0" />
+				<label for="radio-rbc-2">Abnormal</label>
+			</div>
+
+			<h2>Pus Cell (pc)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-pc-1" name="pc" value="1" />
+				<label for="radio-pc-1">Normal</label>
+				<input type="radio" id="radio-pc-2" name="pc" value="0" />
+				<label for="radio-pc-2">Abnormal</label>
+			</div>
+
+			<h2>Pus Cell clumps (pcc)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-pcc-1" name="pcc" value="1" />
+				<label for="radio-pcc-1">Present</label>
+				<input type="radio" id="radio-pcc-2" name="pcc" value="0" />
+				<label for="radio-pcc-2">Not Present</label>
+			</div>
+
+			<h2>Bacteria (ba)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-ba-1" name="ba" value="1" />
+				<label for="radio-ba-1">Present</label>
+				<input type="radio" id="radio-ba-2" name="ba" value="0" />
+				<label for="radio-ba-2">Not Present</label>
+			</div>
+
+
+
+			<h2>Hypertension (htn)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-htn-1" name="htn" value="1" />
+				<label for="radio-htn-1">Yes</label>
+				<input type="radio" id="radio-htn-2" name="htn" value="0" />
+				<label for="radio-htn-2">No</label>
+			</div>
+
+			<h2>Diabetes Mellitus (dm)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-dm-1" name="dm" value="1" />
+				<label for="radio-dm-1">Yes</label>
+				<input type="radio" id="radio-dm-2" name="dm" value="0" />
+				<label for="radio-dm-2">No</label>
+			</div>
+
+			<h2>Coronary Artery Disease (cad)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-cad-1" name="cad" value="1" />
+				<label for="radio-cad-1">Yes</label>
+				<input type="radio" id="radio-cad-2" name="cad" value="0" />
+				<label for="radio-cad-2">No</label>
+			</div>
+
+
+			<h2>Appetite (appet)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-appet-1" name="appet" value="0" />
+				<label for="radio-appet-1">Good</label>
+				<input type="radio" id="radio-appet-2" name="appet" value="1" />
+				<label for="radio-appet-2">Poor</label>
+			</div>
+
+			<h2>Pedal Edema (pe)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-pe-1" name="pe" value="1" />
+				<label for="radio-pe-1">Yes</label>
+				<input type="radio" id="radio-pe-2" name="pe" value="0" />
+				<label for="radio-pe-2">No</label>
+			</div>
+
+			<h2>Anemia (ane)</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-ane-1" name="ane" value="1" />
+				<label for="radio-ane-1">Yes</label>
+				<input type="radio" id="radio-ane-2" name="ane" value="0" />
+				<label for="radio-ane-2">No</label>
+			</div>
+
+			<button class="submit" type="submit">Estimate Ckd</button>
+		</form>
+	</div>
+
+
+
+	<div id="uiCkd" class="result">
+		<h2>{{ ckd_prediction }} </h2>
+
+		<br><br>
+		<br><br>
+	</div>
+	</div>
+</body>
+
+</html>
+<!-- onclick="onClickedCkdPrediction()" -->
